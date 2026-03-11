@@ -1,0 +1,80 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Testimonials{% endblock %}
+{% block header_actions %}
+<button onclick="document.getElementById('testModal').style.display='flex'" class="btn-primary">
+  ➕ Add Review
+</button>
+{% endblock %}
+
+{% block content %}
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>Avatar</th>
+        <th>Patient Name</th>
+        <th>Tag</th>
+        <th>Stars</th>
+        <th>Review snippet</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for test in testimonials %}
+      <tr>
+        <td style="font-size:1.5rem;">{{ test.avatar_emoji }}</td>
+        <td style="font-weight:600;">{{ test.patient_name }}</td>
+        <td>{{ test.tag }}</td>
+        <td>{{ '⭐' * test.stars }}</td>
+        <td style="max-width:300px;">{{ test.review_text[:60] }}...</td>
+        <td>
+            <form action="{{ url_for('admin_testimonial_delete', id=test.id) }}" method="POST" style="margin:0;" onsubmit="return confirm('Delete this review?');">
+                <button type="submit" class="action-btn delete">Delete</button>
+            </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="6" style="text-align:center; padding: 40px; color:var(--muted);">No reviews found.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<!-- Add Modal -->
+<div id="testModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:999; align-items:center; justify-content:center;">
+  <div class="card" style="width: 100%; max-width: 500px;">
+    <h3 style="font-family:var(--font-head); font-size:1.4rem; margin-bottom:20px;">Add New Patient Review</h3>
+    <form action="{{ url_for('admin_testimonials') }}" method="POST">
+      <div style="margin-bottom:16px; display:flex; gap:12px;">
+        <div style="flex:1;">
+            <label style="display:block; font-size:0.85rem; color:var(--muted); margin-bottom:8px;">Patient Name</label>
+            <input type="text" name="patient_name" required style="width:100%; padding:10px; background:var(--bg2); border:1px solid var(--border); border-radius:6px; color:var(--white); outline:none;">
+        </div>
+        <div style="width:80px;">
+            <label style="display:block; font-size:0.85rem; color:var(--muted); margin-bottom:8px;">Avatar</label>
+            <input type="text" name="avatar_emoji" value="👤" required style="width:100%; padding:10px; background:var(--bg2); border:1px solid var(--border); border-radius:6px; color:var(--white); outline:none; text-align:center;">
+        </div>
+      </div>
+      <div style="margin-bottom:16px;">
+        <label style="display:block; font-size:0.85rem; color:var(--muted); margin-bottom:8px;">Tag / Treatment Type</label>
+        <input type="text" name="tag" placeholder="e.g. Dental Implants Patient" style="width:100%; padding:10px; background:var(--bg2); border:1px solid var(--border); border-radius:6px; color:var(--white); outline:none;">
+      </div>
+      <div style="margin-bottom:16px;">
+        <label style="display:block; font-size:0.85rem; color:var(--muted); margin-bottom:8px;">Stars (1-5)</label>
+        <input type="number" name="stars" value="5" min="1" max="5" required style="width:100%; padding:10px; background:var(--bg2); border:1px solid var(--border); border-radius:6px; color:var(--white); outline:none;">
+      </div>
+      <div style="margin-bottom:24px;">
+        <label style="display:block; font-size:0.85rem; color:var(--muted); margin-bottom:8px;">Review Text</label>
+        <textarea name="review_text" required rows="4" style="width:100%; padding:10px; background:var(--bg2); border:1px solid var(--border); border-radius:6px; color:var(--white); outline:none; font-family:var(--font-body);"></textarea>
+      </div>
+      <div style="display:flex; justify-content:flex-end; gap:12px;">
+        <button type="button" class="btn-secondary" onclick="document.getElementById('testModal').style.display='none'">Cancel</button>
+        <button type="submit" class="btn-primary">Save Review</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

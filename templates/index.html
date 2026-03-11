@@ -1,0 +1,1857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bright Smile Dental Clinic</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0B0B0B;
+    --bg2: #111111;
+    --bg3: #161616;
+    --card: #1A1A1A;
+    --orange: #FF7A00;
+    --orange-light: #FFA64D;
+    --orange-glow: rgba(255,122,0,0.18);
+    --white: #FFFFFF;
+    --muted: #BDBDBD;
+    --border: rgba(255,255,255,0.07);
+    --font-head: 'Montserrat', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 4px; }
+
+  /* ─── NOISE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(11,11,11,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    transition: all 0.3s ease;
+  }
+
+  .logo {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 1.2rem;
+    letter-spacing: -0.02em;
+    color: var(--white);
+  }
+  .logo span { color: var(--orange); }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+
+  .nav-cta {
+    background: var(--orange);
+    color: var(--white) !important;
+    padding: 10px 22px;
+    border-radius: 6px;
+    font-weight: 700 !important;
+    letter-spacing: 0.03em;
+    transition: background 0.2s, transform 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--orange-light) !important; transform: translateY(-1px); }
+
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: all 0.3s; }
+
+  /* ─── SECTION BASE ─── */
+  section { padding: 100px 5%; }
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--white);
+    margin-bottom: 20px;
+  }
+  .section-sub {
+    color: var(--muted);
+    font-size: 1rem;
+    max-width: 520px;
+    line-height: 1.7;
+  }
+
+  /* ─── FADE IN ─── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 140px 5% 100px;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 65% 50%, rgba(255,122,0,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(255,122,0,0.06) 0%, transparent 60%),
+      linear-gradient(135deg, #0B0B0B 0%, #0f0f0f 100%);
+  }
+
+  .hero-grid-lines {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,122,0,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,122,0,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 60% 50%, black 0%, transparent 70%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,122,0,0.12);
+    border: 1px solid rgba(255,122,0,0.3);
+    padding: 8px 16px;
+    border-radius: 40px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--orange-light);
+    margin-bottom: 28px;
+    text-transform: uppercase;
+  }
+  .hero-badge::before { content: '●'; font-size: 0.6rem; animation: pulse-dot 2s infinite; }
+  @keyframes pulse-dot {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .hero-headline {
+    font-family: var(--font-head);
+    font-weight: 900;
+    font-size: clamp(3rem, 7vw, 6rem);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    margin-bottom: 24px;
+  }
+  .hero-headline .line-orange { color: var(--orange); }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 440px;
+    line-height: 1.75;
+    margin-bottom: 40px;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 56px;
+  }
+
+  .btn-primary {
+    background: var(--orange);
+    color: var(--white);
+    padding: 16px 32px;
+    border-radius: 8px;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-primary:hover {
+    background: var(--orange-light);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(255,122,0,0.35);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--white);
+    padding: 16px 32px;
+    border-radius: 8px;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .btn-secondary:hover {
+    border-color: var(--orange);
+    color: var(--orange);
+    transform: translateY(-3px);
+  }
+
+  .hero-features {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+  .hero-feat {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .hero-feat-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--orange);
+    flex-shrink: 0;
+  }
+
+  .hero-visual {
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 420px;
+    height: 420px;
+    z-index: 1;
+  }
+
+  .hero-circle {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 1px solid rgba(255,122,0,0.15);
+    position: absolute;
+    animation: rotate-slow 20s linear infinite;
+  }
+  .hero-circle-2 {
+    width: 75%;
+    height: 75%;
+    top: 12.5%; left: 12.5%;
+    border: 1px solid rgba(255,122,0,0.1);
+    animation: rotate-slow 15s linear infinite reverse;
+  }
+  .hero-circle-3 {
+    width: 50%;
+    height: 50%;
+    top: 25%; left: 25%;
+    border: 1px solid rgba(255,122,0,0.2);
+    background: radial-gradient(ellipse, rgba(255,122,0,0.08), transparent);
+  }
+
+  @keyframes rotate-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .hero-tooth-icon {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 5rem;
+    filter: drop-shadow(0 0 30px rgba(255,122,0,0.5));
+    animation: float 4s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%,100% { transform: translate(-50%, -50%) translateY(0); }
+    50% { transform: translate(-50%, -50%) translateY(-12px); }
+  }
+
+  /* Orbit dots */
+  .orbit-dot {
+    position: absolute;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--orange);
+    box-shadow: 0 0 12px var(--orange);
+  }
+
+  /* ─── LOGO CLOUD ─── */
+  #logos {
+    padding: 60px 5%;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg2);
+  }
+
+  .logos-label {
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 36px;
+    opacity: 0.6;
+  }
+
+  .logos-track-wrap {
+    overflow: hidden;
+    position: relative;
+    mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  }
+
+  .logos-track {
+    display: flex;
+    gap: 60px;
+    animation: scroll-logos 18s linear infinite;
+    width: max-content;
+  }
+
+  .logos-track:hover { animation-play-state: paused; }
+
+  @keyframes scroll-logos {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .logo-item {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.06em;
+    color: rgba(255,255,255,0.25);
+    white-space: nowrap;
+    transition: color 0.3s, text-shadow 0.3s;
+    cursor: default;
+    padding: 10px 20px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    transition: all 0.3s;
+  }
+  .logo-item:hover {
+    color: var(--orange-light);
+    border-color: rgba(255,122,0,0.2);
+    text-shadow: 0 0 20px rgba(255,122,0,0.4);
+  }
+
+  /* ─── STATS ─── */
+  #stats {
+    background: var(--bg3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  #stats::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 1px;
+    background: linear-gradient(to right, transparent, var(--orange), transparent);
+  }
+
+  .stats-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    margin-top: 56px;
+    background: var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .stat-card {
+    background: var(--card);
+    padding: 48px 32px;
+    text-align: center;
+    position: relative;
+    transition: background 0.3s;
+  }
+  .stat-card:hover { background: #1f1f1f; }
+  .stat-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%) scaleX(0);
+    width: 60%; height: 2px;
+    background: var(--orange);
+    transition: transform 0.3s ease;
+    border-radius: 2px;
+  }
+  .stat-card:hover::after { transform: translateX(-50%) scaleX(1); }
+
+  .stat-number {
+    font-family: var(--font-head);
+    font-weight: 900;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--white);
+    margin-bottom: 8px;
+    position: relative;
+  }
+  .stat-number span { color: var(--orange); }
+  .stat-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* ─── SERVICES ─── */
+  #services {
+    background: var(--bg);
+  }
+
+  .services-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 56px;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .service-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px 28px;
+    transition: all 0.35s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,122,0,0.06) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.35s;
+  }
+  .service-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(255,122,0,0.3);
+    box-shadow: 0 20px 60px rgba(255,122,0,0.12);
+  }
+  .service-card:hover::before { opacity: 1; }
+
+  .service-icon {
+    width: 56px; height: 56px;
+    background: rgba(255,122,0,0.1);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+    transition: background 0.3s;
+    border: 1px solid rgba(255,122,0,0.15);
+  }
+  .service-card:hover .service-icon {
+    background: rgba(255,122,0,0.18);
+  }
+
+  .service-name {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+    color: var(--white);
+  }
+  .service-desc {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  .service-arrow {
+    margin-top: 20px;
+    color: var(--orange);
+    font-size: 1.2rem;
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: all 0.25s;
+  }
+  .service-card:hover .service-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* Service Overlay Details */
+  .service-details {
+    position: absolute;
+    inset: 0;
+    background: rgba(26,26,26,0.96);
+    backdrop-filter: blur(8px);
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    z-index: 10;
+  }
+  .service-card:hover .service-details,
+  .service-card:focus-within .service-details,
+  .service-card:active .service-details {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .service-details h4 {
+    color: var(--white);
+    font-family: var(--font-head);
+    font-size: 1.15rem;
+    margin-bottom: 16px;
+    font-weight: 700;
+  }
+  .service-details ul {
+    list-style: none;
+    margin-bottom: 24px;
+    padding-left: 0;
+  }
+  .service-details li {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .service-details li::before {
+    content: '✓';
+    color: var(--orange);
+    font-weight: bold;
+  }
+  .service-details .btn-primary {
+    padding: 10px 16px;
+    font-size: 0.85rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* ─── BEFORE/AFTER ─── */
+  #gallery {
+    background: var(--bg2);
+    text-align: center;
+  }
+
+  .gallery-container {
+    max-width: 700px;
+    margin: 56px auto 0;
+    position: relative;
+  }
+
+  .ba-wrapper {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    height: 360px;
+    cursor: col-resize;
+    border: 1px solid var(--border);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+  }
+
+  .ba-before, .ba-after {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ba-before {
+    background: linear-gradient(135deg, #1a1a1a, #222);
+  }
+
+  .ba-after {
+    background: linear-gradient(135deg, #1a0f00, #1f1200);
+    clip-path: inset(0 50% 0 0);
+    transition: clip-path 0.0s;
+  }
+
+  .ba-label {
+    font-family: var(--font-head);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 20px;
+    position: absolute;
+    top: 20px;
+    z-index: 5;
+  }
+  .ba-before-label { left: 20px; background: rgba(255,255,255,0.1); color: var(--muted); }
+  .ba-after-label { right: 20px; background: rgba(255,122,0,0.2); color: var(--orange-light); border: 1px solid rgba(255,122,0,0.3); }
+
+  .ba-teeth {
+    font-size: 4rem;
+    filter: drop-shadow(0 4px 16px rgba(0,0,0,0.4));
+  }
+
+  .ba-caption {
+    font-family: var(--font-head);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .ba-sub { font-size: 0.8rem; color: var(--muted); }
+
+  .ba-divider {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: var(--orange);
+    left: 50%;
+    z-index: 4;
+    transition: left 0s;
+    box-shadow: 0 0 20px var(--orange);
+  }
+
+  .ba-handle {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: -18px;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: col-resize;
+    box-shadow: 0 0 20px rgba(255,122,0,0.6);
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 700;
+    z-index: 5;
+    user-select: none;
+  }
+
+  .gallery-hint {
+    margin-top: 20px;
+    font-size: 0.8rem;
+    color: var(--muted);
+    opacity: 0.6;
+  }
+
+  .ba-result-badges {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .result-badge {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 8px 18px;
+    border-radius: 40px;
+    font-size: 0.8rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .result-badge span { color: var(--orange); font-weight: 700; }
+
+  /* ─── DOCTOR ─── */
+  #doctor {
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
+  }
+
+  #doctor::before {
+    content: '';
+    position: absolute;
+    right: -10%;
+    top: -20%;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(255,122,0,0.06), transparent 70%);
+    pointer-events: none;
+  }
+
+  .doctor-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .doctor-visual {
+    position: relative;
+  }
+
+  .doctor-avatar {
+    width: 100%;
+    aspect-ratio: 4/5;
+    border-radius: 24px;
+    background: linear-gradient(145deg, #1a1a1a, #222);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 6rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .doctor-avatar::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,122,0,0.06) 0%, transparent 60%);
+  }
+
+  .doctor-avatar-emoji {
+    font-size: 7rem;
+    filter: drop-shadow(0 4px 20px rgba(255,122,0,0.3));
+  }
+
+  .doc-tag {
+    position: absolute;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    backdrop-filter: blur(10px);
+  }
+
+  .doc-tag-1 {
+    bottom: 28px;
+    left: -20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+
+  .doc-tag-2 {
+    top: 28px;
+    right: -20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+
+  .doc-tag-icon {
+    width: 36px; height: 36px;
+    background: rgba(255,122,0,0.15);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+  }
+
+  .doc-tag-text { font-size: 0.8rem; }
+  .doc-tag-title { font-weight: 700; color: var(--white); display: block; }
+  .doc-tag-sub { color: var(--muted); font-size: 0.72rem; }
+
+
+  .doctor-name {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 2.4rem;
+    letter-spacing: -0.03em;
+    margin-bottom: 4px;
+  }
+
+  .doctor-title {
+    color: var(--orange);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .doctor-desc {
+    color: var(--muted);
+    line-height: 1.75;
+    margin-bottom: 32px;
+    font-size: 1rem;
+  }
+
+  .doctor-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+
+  .doc-stat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    transition: border-color 0.3s;
+  }
+  .doc-stat:hover { border-color: rgba(255,122,0,0.3); }
+  .doc-stat-n {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: var(--orange);
+  }
+  .doc-stat-l { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
+
+  /* ─── TESTIMONIALS ─── */
+  #testimonials {
+    background: var(--bg2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .testimonials-header {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+
+  .testimonials-track-wrap {
+    overflow: hidden;
+    position: relative;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  }
+
+  .testimonials-track {
+    display: flex;
+    gap: 24px;
+    animation: scroll-reviews 25s linear infinite;
+    width: max-content;
+  }
+  .testimonials-track:hover { animation-play-state: paused; }
+
+  @keyframes scroll-reviews {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .review-card {
+    width: 340px;
+    flex-shrink: 0;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .review-card:hover {
+    border-color: rgba(255,122,0,0.25);
+    transform: translateY(-4px);
+  }
+
+  .review-stars {
+    display: flex;
+    gap: 3px;
+    margin-bottom: 16px;
+  }
+  .star { color: var(--orange); font-size: 0.9rem; }
+
+  .review-text {
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+
+  .review-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .review-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: rgba(255,122,0,0.15);
+    border: 1px solid rgba(255,122,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+  }
+
+  .review-name {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--white);
+  }
+
+  .review-tag {
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-top: 1px;
+  }
+
+  /* ─── BOOKING CTA ─── */
+  #booking {
+    background: var(--bg);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #booking::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 50% 50%, rgba(255,122,0,0.1) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 20%, rgba(255,122,0,0.05) 0%, transparent 60%);
+  }
+
+  .booking-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .booking-title {
+    font-family: var(--font-head);
+    font-weight: 900;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: -0.04em;
+    line-height: 1.0;
+    margin-bottom: 20px;
+  }
+  .booking-title span { color: var(--orange); }
+
+  .booking-sub {
+    color: var(--muted);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-bottom: 40px;
+  }
+
+  .booking-form {
+    display: flex;
+    gap: 12px;
+    max-width: 480px;
+    margin: 0 auto 24px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .booking-input {
+    flex: 1;
+    min-width: 200px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .booking-input::placeholder { color: rgba(255,255,255,0.25); }
+  .booking-input:focus { border-color: var(--orange); }
+
+  .booking-note {
+    font-size: 0.78rem;
+    color: var(--muted);
+    opacity: 0.6;
+  }
+  .booking-note a { color: var(--orange); text-decoration: none; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    padding: 70px 5% 30px;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    max-width: 1200px;
+    margin: 0 auto 56px;
+  }
+
+  .footer-brand .logo { font-size: 1.4rem; margin-bottom: 16px; display: block; }
+
+  .footer-tagline {
+    color: var(--muted);
+    font-size: 0.875rem;
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+
+  .social-links {
+    display: flex;
+    gap: 10px;
+  }
+
+  .social-link {
+    width: 38px; height: 38px;
+    border-radius: 8px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: all 0.25s;
+    color: var(--muted);
+  }
+  .social-link:hover {
+    background: rgba(255,122,0,0.12);
+    border-color: rgba(255,122,0,0.3);
+    color: var(--orange);
+    transform: translateY(-2px);
+  }
+
+  .footer-col-title {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 20px;
+  }
+
+  .footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .footer-links a:hover { color: var(--orange); }
+  .footer-links a::before { content: '→'; font-size: 0.75rem; opacity: 0; transform: translateX(-4px); transition: all 0.2s; }
+  .footer-links a:hover::before { opacity: 1; transform: translateX(0); }
+
+  .footer-contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 14px;
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+  .contact-icon { color: var(--orange); font-size: 1rem; margin-top: 1px; flex-shrink: 0; }
+
+  .footer-bottom {
+    border-top: 1px solid var(--border);
+    padding-top: 28px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-copy {
+    font-size: 0.8rem;
+    color: var(--muted);
+    opacity: 0.5;
+  }
+
+  .footer-legal {
+    display: flex;
+    gap: 24px;
+  }
+
+  .footer-legal a {
+    font-size: 0.8rem;
+    color: var(--muted);
+    opacity: 0.5;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .footer-legal a:hover { opacity: 1; }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 1024px) {
+    .hero-visual { display: none; }
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .doctor-grid { grid-template-columns: 1fr; gap: 48px; }
+    .doctor-visual { max-width: 400px; margin: 0 auto; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    section { padding: 70px 5%; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .services-grid { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-grid { grid-template-columns: 1fr; gap: 36px; }
+    .hero-headline { font-size: 3rem; }
+    .doc-tag-1, .doc-tag-2 { display: none; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+  }
+
+  @media (max-width: 480px) {
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .services-grid { grid-template-columns: 1fr; }
+    .hero-btns { flex-direction: column; }
+    .btn-primary, .btn-secondary { text-align: center; justify-content: center; }
+  }
+
+  /* ─── MOBILE NAV ─── */
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    top: 70px; left: 0; right: 0;
+    background: rgba(11,11,11,0.98);
+    backdrop-filter: blur(20px);
+    padding: 24px 5%;
+    border-bottom: 1px solid var(--border);
+    z-index: 99;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .mobile-nav.open { display: flex; }
+  .mobile-nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    transition: color 0.2s;
+  }
+  .mobile-nav a:hover { color: var(--orange); }
+
+  /* ─── INLINE SVG ICONS ─── */
+  .chevron-right { display: inline-block; }
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav id="navbar">
+  <div class="logo">Bright<span>Smile</span> ✦</div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Results</a></li>
+    <li><a href="#doctor">Doctor</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#location">Location</a></li>
+    <li><a href="#booking" class="nav-cta">Book Now</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="mobile-nav" id="mobileNav">
+  <a href="#services" onclick="toggleMenu()">Services</a>
+  <a href="#gallery" onclick="toggleMenu()">Results</a>
+  <a href="#doctor" onclick="toggleMenu()">Doctor</a>
+  <a href="#testimonials" onclick="toggleMenu()">Reviews</a>
+  <a href="#location" onclick="toggleMenu()">Location</a>
+  <a href="#booking" onclick="toggleMenu()">Book Appointment</a>
+</div>
+
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-lines"></div>
+
+  <div class="hero-content fade-up">
+    <div class="hero-badge">🦷 Advanced Dental Care</div>
+    <h1 class="hero-headline">
+      CONFIDENT<br>
+      <span class="line-orange">SMILES</span><br>
+      START HERE
+    </h1>
+    <p class="hero-sub">Advanced dental care with modern technology and expert dentists who put you first — every visit.</p>
+    <div class="hero-btns">
+      <a href="#booking" class="btn-primary">Book Appointment →</a>
+      <a href="#services" class="btn-secondary">View Services</a>
+    </div>
+    <div class="hero-features">
+      <div class="hero-feat"><div class="hero-feat-dot"></div> Modern Equipment</div>
+      <div class="hero-feat"><div class="hero-feat-dot"></div> Experienced Dentists</div>
+      <div class="hero-feat"><div class="hero-feat-dot"></div> Pain-Free Treatments</div>
+    </div>
+  </div>
+
+  <div class="hero-visual" aria-hidden="true">
+    <div class="hero-circle"></div>
+    <div class="hero-circle hero-circle-2"></div>
+    <div class="hero-circle hero-circle-3"></div>
+    <div class="hero-tooth-icon">🦷</div>
+    <!-- orbit dots -->
+    <div class="orbit-dot" style="top:8%; left:50%; transform:translateX(-50%);"></div>
+    <div class="orbit-dot" style="bottom:12%; right:12%;"></div>
+    <div class="orbit-dot" style="top:50%; left:3%;"></div>
+  </div>
+</section>
+
+<!-- ─── LOGO CLOUD ─── -->
+<div id="logos">
+  <p class="logos-label">Trusted by Patients &amp; Partners</p>
+  <div class="logos-track-wrap">
+    <div class="logos-track">
+      <div class="logo-item">Delta Dental</div>
+      <div class="logo-item">Cigna</div>
+      <div class="logo-item">MetLife</div>
+      <div class="logo-item">Philips Sonicare</div>
+      <div class="logo-item">Dentsply Sirona</div>
+      <div class="logo-item">Straumann</div>
+      <!-- duplicate for seamless loop -->
+      <div class="logo-item">Delta Dental</div>
+      <div class="logo-item">Cigna</div>
+      <div class="logo-item">MetLife</div>
+      <div class="logo-item">Philips Sonicare</div>
+      <div class="logo-item">Dentsply Sirona</div>
+      <div class="logo-item">Straumann</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── STATS ─── -->
+<section id="stats">
+  <div class="stats-inner">
+    <p class="section-label fade-up">Our Impact</p>
+    <h2 class="section-title fade-up">Numbers That<br>Speak For Themselves</h2>
+    <div class="stats-grid">
+      <div class="stat-card fade-up">
+        <div class="stat-number"><span>{{ doctor.patients_count }}</span></div>
+        <div class="stat-label">Happy Patients</div>
+      </div>
+      <div class="stat-card fade-up">
+        <div class="stat-number"><span id="stat2">0</span>+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat-card fade-up">
+        <div class="stat-number"><span>{{ doctor.treatments_count }}</span></div>
+        <div class="stat-label">Successful Treatments</div>
+      </div>
+      <div class="stat-card fade-up">
+        <div class="stat-number"><span id="stat4">0</span></div>
+        <div class="stat-label">Average Rating</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SERVICES ─── -->
+<section id="services">
+  <div class="services-header fade-up" style="max-width:1200px;margin:0 auto 56px;">
+    <div>
+      <p class="section-label">What We Offer</p>
+      <h2 class="section-title" style="margin-bottom:0">Dental Services</h2>
+    </div>
+    <p class="section-sub">Comprehensive care using the latest dental technology for all your oral health needs.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card fade-up" tabindex="0">
+      <div class="service-icon">✨</div>
+      <div class="service-name">Teeth Cleaning</div>
+      <div class="service-desc">Professional deep cleaning for healthier, brighter teeth and optimal gum health.</div>
+      <div class="service-arrow">→</div>
+      <div class="service-details">
+        <h4>Clean & Protect</h4>
+        <ul>
+          <li>Plaque & Tartar Removal</li>
+          <li>Enamel Polishing</li>
+          <li>Fluoride Treatment</li>
+        </ul>
+        <a href="#booking" class="btn-primary" onclick="document.getElementById('bookService').value='Teeth Cleaning'">Book Now</a>
+      </div>
+    </div>
+    <div class="service-card fade-up" tabindex="0">
+      <div class="service-icon">🦷</div>
+      <div class="service-name">Dental Implants</div>
+      <div class="service-desc">Permanent, natural-looking replacements for missing teeth that last a lifetime.</div>
+      <div class="service-arrow">→</div>
+      <div class="service-details">
+        <h4>Implant Solutions</h4>
+        <ul>
+          <li>Titanium Root Placement</li>
+          <li>Custom Crown Fitting</li>
+          <li>Bone Grafting (if needed)</li>
+        </ul>
+        <a href="#booking" class="btn-primary" onclick="document.getElementById('bookService').value='Dental Implants'">Book Now</a>
+      </div>
+    </div>
+    <div class="service-card fade-up" tabindex="0">
+      <div class="service-icon">😁</div>
+      <div class="service-name">Teeth Whitening</div>
+      <div class="service-desc">Advanced laser whitening treatments for a noticeably brighter, confident smile.</div>
+      <div class="service-arrow">→</div>
+      <div class="service-details">
+        <h4>Radiant Smile</h4>
+        <ul>
+          <li>Laser/LED Whitening</li>
+          <li>Custom Bleaching Trays</li>
+          <li>Stain Removal</li>
+        </ul>
+        <a href="#booking" class="btn-primary" onclick="document.getElementById('bookService').value='Teeth Whitening'">Book Now</a>
+      </div>
+    </div>
+    <div class="service-card fade-up" tabindex="0">
+      <div class="service-icon">⚡</div>
+      <div class="service-name">Braces &amp; Aligners</div>
+      <div class="service-desc">Straighten teeth comfortably with clear aligners and modern orthodontic solutions.</div>
+      <div class="service-arrow">→</div>
+      <div class="service-details">
+        <h4>Straighter Teeth</h4>
+        <ul>
+          <li>Invisible Aligners</li>
+          <li>Ceramic/Metal Braces</li>
+          <li>Retaining & Fitting</li>
+        </ul>
+        <a href="#booking" class="btn-primary" onclick="document.getElementById('bookService').value='Braces & Aligners'">Book Now</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── BEFORE/AFTER ─── -->
+<section id="gallery">
+  <p class="section-label fade-up">Real Results</p>
+  <h2 class="section-title fade-up">Smile Transformations</h2>
+  <p class="section-sub fade-up" style="margin:0 auto;">See the real difference our treatments make — authentic patient results from our clinic.</p>
+
+  <div class="gallery-container">
+    <div class="ba-wrapper" id="baWrapper">
+      <div class="ba-before">
+        <div class="ba-teeth">😬</div>
+        <div class="ba-caption">Before Treatment</div>
+        <div class="ba-sub">Discoloration &amp; Misalignment</div>
+      </div>
+      <div class="ba-after" id="baAfter">
+        <div class="ba-teeth" style="filter:drop-shadow(0 0 20px rgba(255,166,77,0.5))">😁</div>
+        <div class="ba-caption" style="color:var(--orange-light)">After Treatment</div>
+        <div class="ba-sub" style="color:rgba(255,166,77,0.7)">Whitened &amp; Aligned</div>
+      </div>
+      <div class="ba-label ba-before-label">BEFORE</div>
+      <div class="ba-label ba-after-label">AFTER</div>
+      <div class="ba-divider" id="baDivider">
+        <div class="ba-handle">⇌</div>
+      </div>
+    </div>
+    <p class="gallery-hint">← Drag to compare →</p>
+    <div class="ba-result-badges">
+      <div class="result-badge">🌟 <span>4.9</span> Avg Rating</div>
+      <div class="result-badge"> <span>2000+</span> Transformations</div>
+      <div class="result-badge"><span>100%</span> Pain-Free</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── DOCTOR ─── -->
+<section id="doctor">
+  <div class="doctor-grid">
+    <div class="doctor-visual fade-up">
+      <div class="doctor-avatar">
+        <div class="doctor-avatar-emoji">👨‍⚕️</div>
+      </div>
+      <div class="doc-tag doc-tag-1">
+        <div class="doc-tag-icon">🏆</div>
+        <div class="doc-tag-text">
+          <span class="doc-tag-title">Top Rated</span>
+          <span class="doc-tag-sub">Dental Specialist</span>
+        </div>
+      </div>
+      <div class="doc-tag doc-tag-2">
+        <div class="doc-tag-icon">⭐</div>
+        <div class="doc-tag-text">
+          <span class="doc-tag-title">4.9 / 5.0</span>
+          <span class="doc-tag-sub">500+ Reviews</span>
+        </div>
+      </div>
+    </div>
+    <div class="doctor-info fade-up">
+      <p class="section-label">Meet Our Dentist</p>
+      <h2 class="doctor-name">{{ doctor.name }}</h2>
+      <div class="doctor-title">{{ doctor.title }}</div>
+      <p class="doctor-desc">
+        {{ doctor.description }}
+      </p>
+      <div class="doctor-stats">
+        <div class="doc-stat">
+          <div class="doc-stat-n">{{ doctor.experience_years }}+</div>
+          <div class="doc-stat-l">Years Exp.</div>
+        </div>
+        <div class="doc-stat">
+          <div class="doc-stat-n">{{ doctor.patients_count }}</div>
+          <div class="doc-stat-l">Patients</div>
+        </div>
+        <div class="doc-stat">
+          <div class="doc-stat-n">{{ doctor.treatments_count }}</div>
+          <div class="doc-stat-l">Treatments</div>
+        </div>
+      </div>
+      <a href="#booking" class="btn-primary">Book a Consultation →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TESTIMONIALS ─── -->
+<section id="testimonials">
+  <div class="testimonials-header">
+    <p class="section-label fade-up">Patient Reviews</p>
+    <h2 class="section-title fade-up">What Our Patients Say</h2>
+  </div>
+  <div class="testimonials-track-wrap">
+    <div class="testimonials-track">
+      <!-- Real reviews -->
+      <div class="review-card">
+        <div class="review-stars">⭐⭐⭐⭐⭐</div>
+        <p class="review-text">"Excellent dental care and very friendly staff. I was nervous at first but they made me feel so comfortable throughout the entire treatment."</p>
+        <div class="review-author">
+          <div class="review-avatar">👨</div>
+          <div>
+            <div class="review-name">Rahul S.</div>
+            <div class="review-tag">Dental Implants Patient</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">⭐⭐⭐⭐⭐</div>
+        <p class="review-text">"The clinic is modern and the treatment was completely painless. My smile looks absolutely amazing now — best investment I've ever made!"</p>
+        <div class="review-author">
+          <div class="review-avatar">👩</div>
+          <div>
+            <div class="review-name">Priya M.</div>
+            <div class="review-tag">Teeth Whitening Patient</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">⭐⭐⭐⭐⭐</div>
+        <p class="review-text">"I've been coming here for 3 years and the level of professionalism is unmatched. The equipment is state-of-the-art and the team is incredibly skilled."</p>
+        <div class="review-author">
+          <div class="review-avatar">👨</div>
+          <div>
+            <div class="review-name">Arjun T.</div>
+            <div class="review-tag">Regular Patient</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">⭐⭐⭐⭐⭐</div>
+        <p class="review-text">"Got clear aligners from here and the transformation is unbelievable. The doctor was patient, explained everything clearly and results exceeded my expectations."</p>
+        <div class="review-author">
+          <div class="review-avatar">👩</div>
+          <div>
+            <div class="review-name">Ananya K.</div>
+            <div class="review-tag">Braces &amp; Aligners Patient</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">⭐⭐⭐⭐⭐</div>
+        <p class="review-text">"Best dental experience I've ever had. Clean, modern, and incredibly caring staff. I used to dread going to the dentist — not anymore!"</p>
+        <div class="review-author">
+          <div class="review-avatar">👨</div>
+          <div>
+            <div class="review-name">Vikram R.</div>
+            <div class="review-tag">Teeth Cleaning Patient</div>
+          </div>
+        </div>
+      </div>
+      <!-- Duplicate for loop -->
+      <div class="review-card">
+        <div class="review-stars">⭐⭐⭐⭐⭐</div>
+        <p class="review-text">"Excellent dental care and very friendly staff. I was nervous at first but they made me feel so comfortable throughout the entire treatment."</p>
+        <div class="review-author">
+          <div class="review-avatar">👨</div>
+          <div>
+            <div class="review-name">Rahul S.</div>
+            <div class="review-tag">Dental Implants Patient</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">⭐⭐⭐⭐⭐</div>
+        <p class="review-text">"The clinic is modern and the treatment was completely painless. My smile looks absolutely amazing now — best investment I've ever made!"</p>
+        <div class="review-author">
+          <div class="review-avatar">👩</div>
+          <div>
+            <div class="review-name">Priya M.</div>
+            <div class="review-tag">Teeth Whitening Patient</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">⭐⭐⭐⭐⭐</div>
+        <p class="review-text">"I've been coming here for 3 years and the level of professionalism is unmatched. The equipment is state-of-the-art and the team is incredibly skilled."</p>
+        <div class="review-author">
+          <div class="review-avatar">👨</div>
+          <div>
+            <div class="review-name">Arjun T.</div>
+            <div class="review-tag">Regular Patient</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">⭐⭐⭐⭐⭐</div>
+        <p class="review-text">"Got clear aligners from here and the transformation is unbelievable. The doctor was patient, explained everything clearly and results exceeded my expectations."</p>
+        <div class="review-author">
+          <div class="review-avatar">👩</div>
+          <div>
+            <div class="review-name">Ananya K.</div>
+            <div class="review-tag">Braces &amp; Aligners Patient</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">⭐⭐⭐⭐⭐</div>
+        <p class="review-text">"Best dental experience I've ever had. Clean, modern, and incredibly caring staff. I used to dread going to the dentist — not anymore!"</p>
+        <div class="review-author">
+          <div class="review-avatar">👨</div>
+          <div>
+            <div class="review-name">Vikram R.</div>
+            <div class="review-tag">Teeth Cleaning Patient</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── LOCATION ─── -->
+<section id="location" style="background: var(--bg3); text-align: center; overflow: hidden;">
+  <div style="max-width: 1000px; margin: 0 auto;">
+    <p class="section-label fade-up">Find Us</p>
+    <h2 class="section-title fade-up">Our Location</h2>
+    <p class="section-sub fade-up" style="margin: 0 auto 40px;">Visit our clinic at the heart of the city.</p>
+    
+    <div class="fade-up" style="border-radius: 16px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 20px 60px rgba(0,0,0,0.5);">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.828692742111!2d77.58572181515286!3d12.982823618146313!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae166e5f8f53c1%3A0x6d9f75b7194f1c1f!2sVidhana%20Soudha%2C%20Bengaluru%2C%20Karnataka%20560001!5e0!3m2!1sen!2sin!4v1689230537021!5m2!1sen!2sin" width="100%" height="450" style="border:0; display: block;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ─── BOOKING CTA ─── -->
+<section id="booking">
+  <div class="booking-inner">
+    <p class="section-label fade-up">Get Started Today</p>
+    <h2 class="booking-title fade-up">Book Your <span>Dental</span><br>Appointment</h2>
+    <p class="booking-sub fade-up">Schedule your visit easily. Our team will confirm your slot and send reminders before your visit.</p>
+    <div class="booking-form fade-up" style="flex-direction: column; align-items: stretch; gap: 16px;">
+      <input type="text" id="bookName" class="booking-input" placeholder="Your Name" />
+      <input type="tel" id="bookPhone" class="booking-input" placeholder="Your Phone Number" />
+      <select id="bookService" class="booking-input" style="color: var(--white); cursor: pointer; appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right .7em top 50%; background-size: .65em auto;">
+        <option value="" disabled selected style="color: #666;">Select a Service</option>
+        {% for service in services %}
+        <option value="{{ service.name }}" style="color: #000;">{{ service.name }}</option>
+        {% endfor %}
+        <option value="General Consultation" style="color: #000;">General Consultation</option>
+      </select>
+      <button class="btn-primary" onclick="handleBook()" style="justify-content: center;">Book Now →</button>
+    </div>
+    <p class="booking-note fade-up">By booking, you agree to our <a href="#">Privacy Policy</a>. No spam, ever.</p>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">Bright<span>Smile</span> ✦</div>
+      <p class="footer-tagline">Advanced dental care with modern technology and expert dentists. Creating confident smiles across India.</p>
+      <div class="social-links">
+        <a href="#" class="social-link" title="Instagram">📸</a>
+        <a href="#" class="social-link" title="Facebook">👍</a>
+        <a href="#" class="social-link" title="Google Maps">📍</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links">
+        <li><a href="#services">Teeth Cleaning</a></li>
+        <li><a href="#services">Dental Implants</a></li>
+        <li><a href="#services">Teeth Whitening</a></li>
+        <li><a href="#services">Braces &amp; Aligners</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Clinic</div>
+      <ul class="footer-links">
+        <li><a href="#doctor">Meet the Doctor</a></li>
+        <li><a href="#gallery">Before &amp; After</a></li>
+        <li><a href="#testimonials">Patient Reviews</a></li>
+        <li><a href="#location">Our Location</a></li>
+        <li><a href="#booking">Book Appointment</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <div class="footer-contact-item">
+        <span class="contact-icon">📞</span>
+        <span>+91-XXXXXXXXXX</span>
+      </div>
+      <div class="footer-contact-item">
+        <span class="contact-icon">✉️</span>
+        <span>contact@clinic.com</span>
+      </div>
+      <div class="footer-contact-item">
+        <span class="contact-icon">📍</span>
+        <span>India</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 Bright Smile Dental Clinic. All rights reserved.</p>
+    <div class="footer-legal">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ─── FADE IN ON SCROLL ───
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        e.target.style.transitionDelay = `${i * 0.07}s`;
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // ─── NAV SCROLL ───
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    nav.style.padding = window.scrollY > 50 ? '14px 5%' : '20px 5%';
+  });
+
+  // ─── MOBILE NAV ───
+  function toggleMenu() {
+    document.getElementById('mobileNav').classList.toggle('open');
+  }
+
+  // ─── COUNTER ANIMATION ───
+  function animateCounter(el, target, decimals = 0, duration = 1800) {
+    const start = performance.now();
+    const update = (now) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      const val = ease * target;
+      el.textContent = decimals > 0 ? val.toFixed(decimals) : Math.floor(val).toLocaleString();
+      if (progress < 1) requestAnimationFrame(update);
+    };
+    requestAnimationFrame(update);
+  }
+
+  const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        animateCounter(document.getElementById('stat2'), parseInt('{{ doctor.experience_years | default(10) }}'));
+        animateCounter(document.getElementById('stat4'), 4.9, 1);
+        statsObserver.disconnect();
+      }
+    });
+  }, { threshold: 0.3 });
+  statsObserver.observe(document.getElementById('stats'));
+
+  // ─── BEFORE/AFTER SLIDER ───
+  const wrapper = document.getElementById('baWrapper');
+  const after = document.getElementById('baAfter');
+  const divider = document.getElementById('baDivider');
+  let dragging = false;
+
+  function setSlider(pct) {
+    pct = Math.max(5, Math.min(95, pct));
+    after.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+    divider.style.left = pct + '%';
+  }
+
+  setSlider(50);
+
+  // Auto demo
+  let autoPct = 50, autoDir = -1;
+  let autoInterval = setInterval(() => {
+    if (!dragging) {
+      autoPct += autoDir * 0.4;
+      if (autoPct <= 20 || autoPct >= 80) autoDir *= -1;
+      setSlider(autoPct);
+    }
+  }, 16);
+
+  wrapper.addEventListener('mousedown', (e) => { dragging = true; clearInterval(autoInterval); });
+  window.addEventListener('mouseup', () => { dragging = false; });
+  window.addEventListener('mousemove', (e) => {
+    if (!dragging) return;
+    const rect = wrapper.getBoundingClientRect();
+    setSlider(((e.clientX - rect.left) / rect.width) * 100);
+  });
+
+  wrapper.addEventListener('touchstart', (e) => { dragging = true; clearInterval(autoInterval); }, { passive: true });
+  window.addEventListener('touchend', () => { dragging = false; });
+  window.addEventListener('touchmove', (e) => {
+    if (!dragging) return;
+    const rect = wrapper.getBoundingClientRect();
+    setSlider(((e.touches[0].clientX - rect.left) / rect.width) * 100);
+  }, { passive: true });
+
+  // ─── BOOKING ───
+  function handleBook() {
+    const nameInput = document.getElementById('bookName');
+    const phoneInput = document.getElementById('bookPhone');
+    const serviceInput = document.getElementById('bookService');
+    
+    // reset borders
+    nameInput.style.borderColor = 'var(--border)';
+    phoneInput.style.borderColor = 'var(--border)';
+    serviceInput.style.borderColor = 'var(--border)';
+
+    if (!nameInput.value.trim() || !phoneInput.value.trim() || !serviceInput.value) {
+      if(!nameInput.value.trim()) nameInput.style.borderColor = 'var(--orange)';
+      if(!phoneInput.value.trim()) phoneInput.style.borderColor = 'var(--orange)';
+      if(!serviceInput.value) serviceInput.style.borderColor = 'var(--orange)';
+      return;
+    }
+    // Send request to Flask API
+    fetch('/api/book', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: nameInput.value.trim(),
+        phone: phoneInput.value.trim(),
+        service: serviceInput.value
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if(data.success) {
+        const btn = document.querySelector('#booking .btn-primary');
+        btn.textContent = '✓ Request Sent!';
+        btn.style.background = '#28a745';
+        btn.style.borderColor = '#28a745';
+        
+        setTimeout(() => {
+          btn.textContent = 'Book Now →';
+          btn.style.background = '';
+          btn.style.borderColor = '';
+          nameInput.value = '';
+          phoneInput.value = '';
+          serviceInput.value = '';
+        }, 3000);
+      } else {
+        alert(data.error || 'Something went wrong.');
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      alert('Failed to book appointment. Please try again.');
+    });
+  }
+</script>
+</body>
+</html>

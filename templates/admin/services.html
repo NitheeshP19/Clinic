@@ -1,0 +1,72 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Services Management{% endblock %}
+{% block header_actions %}
+<button onclick="document.getElementById('serviceModal').style.display='flex'" class="btn-primary">
+  ➕ Add Service
+</button>
+{% endblock %}
+
+{% block content %}
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>Icon</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Order</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for service in services %}
+      <tr>
+        <td style="font-size:1.5rem;">{{ service.icon }}</td>
+        <td style="font-weight:600;">{{ service.name }}</td>
+        <td style="max-width:300px;">{{ service.description[:80] }}{% if service.description|length > 80 %}...{% endif %}</td>
+        <td>{{ service.order }}</td>
+        <td>
+            <form action="{{ url_for('admin_service_delete', id=service.id) }}" method="POST" style="margin:0;" onsubmit="return confirm('Delete this service?');">
+                <button type="submit" class="action-btn delete">Delete</button>
+            </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="5" style="text-align:center; padding: 40px; color:var(--muted);">No services found.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<!-- Add Modal -->
+<div id="serviceModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:999; align-items:center; justify-content:center;">
+  <div class="card" style="width: 100%; max-width: 500px;">
+    <h3 style="font-family:var(--font-head); font-size:1.4rem; margin-bottom:20px;">Add New Service</h3>
+    <form action="{{ url_for('admin_services') }}" method="POST">
+      <div style="margin-bottom:16px;">
+        <label style="display:block; font-size:0.85rem; color:var(--muted); margin-bottom:8px;">Name</label>
+        <input type="text" name="name" required style="width:100%; padding:10px; background:var(--bg2); border:1px solid var(--border); border-radius:6px; color:var(--white); outline:none;">
+      </div>
+      <div style="margin-bottom:16px;">
+        <label style="display:block; font-size:0.85rem; color:var(--muted); margin-bottom:8px;">Icon (Emoji or text)</label>
+        <input type="text" name="icon" required style="width:100%; padding:10px; background:var(--bg2); border:1px solid var(--border); border-radius:6px; color:var(--white); outline:none;">
+      </div>
+      <div style="margin-bottom:16px;">
+        <label style="display:block; font-size:0.85rem; color:var(--muted); margin-bottom:8px;">Description</label>
+        <textarea name="description" required rows="4" style="width:100%; padding:10px; background:var(--bg2); border:1px solid var(--border); border-radius:6px; color:var(--white); outline:none; font-family:var(--font-body);"></textarea>
+      </div>
+      <div style="margin-bottom:24px;">
+        <label style="display:block; font-size:0.85rem; color:var(--muted); margin-bottom:8px;">Display Order Number</label>
+        <input type="number" name="order" value="0" style="width:100%; padding:10px; background:var(--bg2); border:1px solid var(--border); border-radius:6px; color:var(--white); outline:none;">
+      </div>
+      <div style="display:flex; justify-content:flex-end; gap:12px;">
+        <button type="button" class="btn-secondary" onclick="document.getElementById('serviceModal').style.display='none'">Cancel</button>
+        <button type="submit" class="btn-primary">Save Service</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="card" style="width: 100%; max-width: 400px; padding: 40px;">
+  <div style="text-align:center; margin-bottom: 30px;">
+    <div style="font-family: var(--font-head); font-weight: 800; font-size: 1.6rem; margin-bottom: 8px;">Bright<span style="color:var(--orange)">Smile</span> Admin</div>
+    <div style="color: var(--muted); font-size: 0.9rem;">Sign in to manage the clinic.</div>
+  </div>
+
+  <form method="POST" action="{{ url_for('admin_login') }}">
+    <div style="margin-bottom: 20px;">
+      <label style="display:block; font-size:0.85rem; font-weight:600; color:var(--muted); margin-bottom:8px;">Username</label>
+      <input type="text" name="username" required style="width:100%; padding:12px; background:var(--bg2); border:1px solid var(--border); border-radius:6px; color:var(--white); font-family:var(--font-body); outline:none;">
+    </div>
+    
+    <div style="margin-bottom: 30px;">
+      <label style="display:block; font-size:0.85rem; font-weight:600; color:var(--muted); margin-bottom:8px;">Password</label>
+      <input type="password" name="password" required style="width:100%; padding:12px; background:var(--bg2); border:1px solid var(--border); border-radius:6px; color:var(--white); font-family:var(--font-body); outline:none;">
+    </div>
+    
+    <button type="submit" class="btn-primary" style="width:100%; padding:14px;">Sign In</button>
+  </form>
+</div>
+{% endblock %}
