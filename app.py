@@ -65,6 +65,9 @@ def init_db():
 
             db.session.commit()
 
+# Initialize database automatically so Gunicorn creates tables on startup
+init_db()
+
 # --- PUBLIC ROUTES ---
 @app.route('/')
 def index():
@@ -264,5 +267,4 @@ def admin_settings():
     return render_template('admin/settings.html', doctor=doctor)
 
 if __name__ == '__main__':
-    init_db()
     app.run(debug=True, port=5000)
